@@ -1,0 +1,2 @@
+BOOTLOADER = atmel-dfu
+DYNAMIC_MACRO_ENABLE = yes
