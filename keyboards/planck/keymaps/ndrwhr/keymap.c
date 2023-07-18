@@ -31,22 +31,40 @@ enum custom_keycodes {
     e30, e31, e32, e33, e34, e35, e36, e37, e38, e39, e3a, e3b
 };
 
+// Custom Macro Keycodes:
+
+// Random stuff:
+#define CMK_SYS_PREF    LGUI(KC_COMMA)
+#define CMK_SLEEP_DIS   RCS(KC_SLEP)
+
+// Window manager stuff:
+#define CMK_DESKTOP     KC_F11
+#define CMK_MAXIMIZE    MEH(KC_F)
+#define CMK_LEFT_H      MEH(KC_G)
+#define CMK_RIGHT_H     MEH(KC_C)
+#define CMK_CENTER      MEH(KC_D)
+#define CMK_LEFT_T      MEH(KC_H)
+#define CMK_CENTER_T    MEH(KC_T)
+#define CMK_RIGHT_T     MEH(KC_N)
+#define CMK_UPPER_L     MEH(KC_B)
+#define CMK_UPPER_R     MEH(KC_M)
+#define CMK_LOWER_L     MEH(KC_W)
+#define CMK_LOWER_R     MEH(KC_V)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_planck_grid(
-        e00, e01, e02, e03, e04, e05, e06, e07, e08, e09, e0a, e0b,
-        e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e1a, e1b,
-        e20, e21, e22, e23, e24, e25, e26, e27, e28, e29, e2a, e2b,
-        e30, e31, e32, e33, e34, e35, e36, e37, e38, e39, e3a, e3b
+        e00, e01, e02, e03, e04, e05, e06, e07, e08,         e09,          CMK_SYS_PREF, CMK_SLEEP_DIS,
+        e10, e11, e12, e13, e14, e15, e16, e17, CMK_DESKTOP, CMK_MAXIMIZE, CMK_LEFT_H,   CMK_RIGHT_H,
+        e20, e21, e22, e23, e24, e25, e26, e27, CMK_CENTER,  CMK_LEFT_T,   CMK_CENTER_T, CMK_RIGHT_T,
+        e30, e31, e32, e33, e34, e35, e36, e37, CMK_UPPER_L, CMK_UPPER_R,  CMK_LOWER_L,  CMK_LOWER_R
     ),
 };
 
-#define MISSION_ACCOMPLISHED ":mission_accomplished_1::mission_accomplished_2::mission_accomplished_3::mission_accomplished_4::mission_accomplished_5:"
-
 const char* EMOJIS[] = {
-    ":ohno:",                   ":chef:",           ":prettyprettyprettygood:",     ":chart_with_downwards_trend:",     ":chart_with_upwards_trend:",   ":airhorn:",    ":pay_respects:",   ":sadtrombone:",    ":pikashocked:",        ":eyes:",           ":expressionless:",     ":wave:",
-    ":thumbsup_terminator:",    ":yougotitdude:",   ":sanic:",                      ":dropbox-logo:",                   ":beautiful:",                  ":nice:",       ":yikes:",          ":rip:",            ":pikadrool:",          ":muscle_boba:",    ":woozy:",              ":raised_hand:",
-    ":themoreyouknow:",         ":whynotboth:",     ":monkey_look:",                ":cool::beans:",                    ":plus-one:",                   ":100:",        ":oof:",            ":ruhroh:",         ":dropboxsmile:",       ":man-shrugging:",  ":thinking_face:",      ":clap:",
-    MISSION_ACCOMPLISHED,       ":facepalm:",       ":monkey_look_away:",           ":ty3:",                            ":stamp:",                      ":yes_2:",      ":no_2:",           ":tada:",           ":moneydropboxsmile:",  ":foot-pray:",      ":joy:",                ":thumbsup:",
+    ":thinking-sheep:",                             ":time-sheep:",         ":aaaa-sheep-intensifies:",                 ":party-sheep:",            ":galaxy-brain-sheep:", ":bowing-sheep:",                               ":100-sheep:",          ":detective-sheep:",    ":ty3:",        ":hey-sorry-my-previous-meeting-is-running-over:",  "XXXXX",    "XXXXX",
+    ":mild-panic-sheep-intensifies:",               ":recursive-sheep:",    ":baaaah-sheep-intensifies:",               ":dumpster-fire-sheep:",    ":zoom-sheep:",         ":care-sheep:",                                 ":heart-sheep:",        ":spicy-sheep:",        "XXXXX",        "XXXXX",                                            "XXXXX",    "XXXXX",
+    ":mild-panic-sheep-hyper-intensifies:",         ":thisisfine-sheep:",   ":c-o-l-l-u-s-i-o-n-sheep-intensifies:",    ":sheepit:",                ":dead-sheep:",         ":sheep-but-you-can-see-the-pain-in-its-eyes:", ":conspiracy-sheep:",   ":melting-sheep:",      "XXXXX",        "XXXXX",                                            "XXXXX",    "XXXXX",
+    ":mild-panic-sheep-my-god-its-full-of-stars:",  ":ohno-sheep:",         ":collusion-sheep:",                        ":doit-sheep:",             ":righteous-sheep:",    ":joy-sheep:",                                  ":cool-sheep:",         ":plus-1-sheep:",       "XXXXX",        "XXXXX",                                            "XXXXX",    "XXXXX",
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
