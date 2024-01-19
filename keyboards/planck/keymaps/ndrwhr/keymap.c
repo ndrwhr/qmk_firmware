@@ -24,52 +24,42 @@ void keyboard_post_init_user(void) {
 #endif
 
 enum custom_keycodes {
-    e00 = SAFE_RANGE,
-         e01, e02, e03, e04, e05, e06, e07, e08, e09, e0a, e0b,
-    e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e1a, e1b,
-    e20, e21, e22, e23, e24, e25, e26, e27, e28, e29, e2a, e2b,
-    e30, e31, e32, e33, e34, e35, e36, e37, e38, e39, e3a, e3b
+    CK = SAFE_RANGE,
+
+    // STRING keycodes.
+    SS_00, SS_01, SS_02, SS_03,
 };
 
-// Custom Macro Keycodes:
+const char* STRINGS[] = {
+    ":thinking-sheep:",
+    "Andrew's Flock",
+    "Andrew's Flock 2",
+    "Andrew's Flock 3",
+};
 
-// Random stuff:
-#define CMK_SYS_PREF    LGUI(KC_COMMA)
-#define CMK_SLEEP_DIS   RCS(KC_SLEP)
-
-// Window manager stuff:
-#define CMK_DESKTOP     KC_F11
-#define CMK_MAXIMIZE    MEH(KC_F)
-#define CMK_LEFT_H      MEH(KC_G)
-#define CMK_RIGHT_H     MEH(KC_C)
-#define CMK_CENTER      MEH(KC_D)
-#define CMK_LEFT_T      MEH(KC_H)
-#define CMK_CENTER_T    MEH(KC_T)
-#define CMK_RIGHT_T     MEH(KC_N)
-#define CMK_UPPER_L     MEH(KC_B)
-#define CMK_UPPER_R     MEH(KC_M)
-#define CMK_LOWER_L     MEH(KC_W)
-#define CMK_LOWER_R     MEH(KC_V)
+#define CK_DKTP        C(KC_UP)
+#define CK_SLEEP_DIS   RCS(KC_SLEP)
+#define CK_LOCK        G(C(KC_Q))
+#define CK_SCHT        G(S(KC_4))
+#define CK_SPCH        MEH(KC_S)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_planck_grid(
-        e00, e01, e02, e03, e04, e05, e06, e07, e08,         e09,          CMK_SYS_PREF, CMK_SLEEP_DIS,
-        e10, e11, e12, e13, e14, e15, e16, e17, CMK_DESKTOP, CMK_MAXIMIZE, CMK_LEFT_H,   CMK_RIGHT_H,
-        e20, e21, e22, e23, e24, e25, e26, e27, CMK_CENTER,  CMK_LEFT_T,   CMK_CENTER_T, CMK_RIGHT_T,
-        e30, e31, e32, e33, e34, e35, e36, e37, CMK_UPPER_L, CMK_UPPER_R,  CMK_LOWER_L,  CMK_LOWER_R
+        //     NOTHING      CHROME        SLACK        VSCODE      ITERM2                FIGMA         ZOOM        FINDER        1PASSWORD.      NOTHING         SLEEP
+        SS_00, HYPR(KC_1),  HYPR(KC_2),   HYPR(KC_3),  HYPR(KC_4), HYPR(KC_5),   /*/*/   HYPR(KC_6),   HYPR(KC_7), HYPR(KC_8),   HYPR(KC_9),     HYPR(KC_0),     CK_SLEEP_DIS,
+        //     NOTHING      ALL           1/2L         1/3L        2/3R                  1/3C          2/3L        1/3R          1/2R            NOTHING         LOCK
+        SS_01, HYPR(KC_A),  CK_DKTP,      HYPR(KC_C),  HYPR(KC_D), HYPR(KC_E),   /*/*/   HYPR(KC_F),   HYPR(KC_G), HYPR(KC_H),   HYPR(KC_I),     HYPR(KC_J),     CK_LOCK,
+        //     NOTHING      CENTER        T1/2L        T1/3L       T2/3R                 T1/3C         T2/3L       T1/3R         T1/2R           NOTHING         SCREENSHOT
+        SS_02, HYPR(KC_K),  HYPR(KC_L),   HYPR(KC_M),  HYPR(KC_N), HYPR(KC_O),   /*/*/   HYPR(KC_P),   MEH(KC_A),  HYPR(KC_R),   HYPR(KC_S),     HYPR(KC_T),     CK_SCHT,
+        //     NOTHING      FULL          B1/2L        B1/3L       B2/3R                 B1/3C         B2/3L       B1/3R         B1/2R           NOTHING         SPEAK
+        SS_03, HYPR(KC_U),  HYPR(KC_V),   HYPR(KC_W),  HYPR(KC_X), HYPR(KC_Y),   /*/*/   HYPR(KC_Z),   MEH(KC_O),  MEH(KC_E),    MEH(KC_I),      MEH(KC_SCLN),   CK_SPCH
     ),
 };
 
-const char* EMOJIS[] = {
-    ":thinking-sheep:",                             ":time-sheep:",         ":aaaa-sheep-intensifies:",                 ":party-sheep:",            ":galaxy-brain-sheep:", ":bowing-sheep:",                               ":100-sheep:",          ":detective-sheep:",    ":ty3:",        ":hey-sorry-my-previous-meeting-is-running-over:",  "XXXXX",    "XXXXX",
-    ":mild-panic-sheep-intensifies:",               ":recursive-sheep:",    ":baaaah-sheep-intensifies:",               ":dumpster-fire-sheep:",    ":zoom-sheep:",         ":care-sheep:",                                 ":heart-sheep:",        ":spicy-sheep:",        "XXXXX",        "XXXXX",                                            "XXXXX",    "XXXXX",
-    ":mild-panic-sheep-hyper-intensifies:",         ":thisisfine-sheep:",   ":c-o-l-l-u-s-i-o-n-sheep-intensifies:",    ":sheepit:",                ":dead-sheep:",         ":sheep-but-you-can-see-the-pain-in-its-eyes:", ":conspiracy-sheep:",   ":melting-sheep:",      "XXXXX",        "XXXXX",                                            "XXXXX",    "XXXXX",
-    ":mild-panic-sheep-my-god-its-full-of-stars:",  ":ohno-sheep:",         ":collusion-sheep:",                        ":doit-sheep:",             ":righteous-sheep:",    ":joy-sheep:",                                  ":cool-sheep:",         ":plus-1-sheep:",       "XXXXX",        "XXXXX",                                            "XXXXX",    "XXXXX",
-};
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (keycode >= e00 && keycode <= e3b && record->event.pressed) {
-        SEND_STRING(EMOJIS[keycode - e00]);
+    if (keycode >= SS_00 && keycode <= SS_03 && record->event.pressed) {
+        SEND_STRING(STRINGS[keycode - SS_00]);
+        tap_code(KC_ENTER);
     }
     return true;
 };
