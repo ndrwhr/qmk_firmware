@@ -56,8 +56,8 @@ enum custom_keycodes {
 // Window manager shortcuts.
 // 1st column.
 #define CK_WM_00 C(KC_UP) /* Show Desktop */
-#define CK_WM_10 C(KC_B)  /* Center the window */
-#define CK_WM_20 C(KC_C)  /* Fullscreen */
+#define CK_WM_10 HYPR(KC_B)  /* Center the window */
+#define CK_WM_20 HYPR(KC_C)  /* Fullscreen */
 
 #define CK_WM_01 HYPR(KC_D) /* Top left, 1/3 width. */
 #define CK_WM_11 HYPR(KC_E) /* Left, 1/3 width. */
@@ -76,7 +76,7 @@ enum custom_keycodes {
 #define CK_WM_24 HYPR(KC_O) /* Center, 1/3 width. */
 
 #define CK_WM_05 HYPR(KC_P) /* Top right, 2/3 width. */
-#define CK_WM_15 HYPR(KC_Q) /* Right, 2/3 width. */
+#define CK_WM_15 HYPR(KC_A) /* Right, 2/3 width. NOTE: Q does not work. */
 #define CK_WM_25 HYPR(KC_R) /* Bottom right, 2/3 width. */
 
 #define CK_WM_06 HYPR(KC_S) /* Top right, 1/2 width. */
