@@ -23,43 +23,139 @@ void keyboard_post_init_user(void) {
 }
 #endif
 
+// Custom macros that can't be written using the #define macro.
 enum custom_keycodes {
     CK = SAFE_RANGE,
-
-    // STRING keycodes.
-    SS_00, SS_01, SS_02, SS_03,
+    CK_THINKING_SHEEP,
+    CK_FLOCK_1,
+    CK_FLOCK_2,
+    CK_FLOCK_3,
+    CK_FLOCK_4,
+    CK_SHEEP_MINI_CLEAR,
+    CK_SHEEP_CLEAR,
+    CK_LOREM,
+    CK_SYS_EMOJI,
+    CK_SYS_SCREENSHOT,
 };
 
-const char* STRINGS[] = {
-    ":thinking-sheep:",
-    "Andrew's Flock",
-    "Andrew's Flock 2",
-    "Andrew's Flock 3",
-};
+// Zoom shortcuts
+#define CK_ZOOM_MUTE SGUI(KC_A)
+#define CK_ZOOM_VIDEO SGUI(KC_V)
+#define CK_ZOOM_INVITE SGUI(KC_I)
+#define CK_ZOOM_SHARE SGUI(KC_S)
+#define CK_ZOOM_CHAT SGUI(KC_H)
 
-#define CK_DKTP        C(KC_UP)
-#define CK_SLEEP_DIS   RCS(KC_SLEP)
-#define CK_LOCK        G(C(KC_Q))
-#define CK_SCHT        G(S(KC_4))
-#define CK_SPCH        MEH(KC_S)
+// Dash shortcut
+#define CK_DASH G(KC_E)
+
+// MacOS shortcuts.
+#define CK_SYS_SLEEP_DIS RCS(KC_SLEP)
+#define CK_SYS_LOCK G(C(KC_Q))
+#define CK_SYS_SPEECH MEH(KC_S)
+
+// Window manager shortcuts.
+// 1st column.
+#define CK_WM_00 C(KC_UP) /* Show Desktop */
+#define CK_WM_10 C(KC_B)  /* Center the window */
+#define CK_WM_20 C(KC_C)  /* Fullscreen */
+
+#define CK_WM_01 HYPR(KC_D) /* Top left, 1/3 width. */
+#define CK_WM_11 HYPR(KC_E) /* Left, 1/3 width. */
+#define CK_WM_21 HYPR(KC_F) /* Bottom left, 1/3 width. */
+
+#define CK_WM_02 HYPR(KC_G) /* Top left, 1/2 width. */
+#define CK_WM_12 HYPR(KC_H) /* Left, 1/2 width. */
+#define CK_WM_22 HYPR(KC_I) /* Bottom left, 1/2 width. */
+
+#define CK_WM_03 HYPR(KC_J) /* Top left, 2/3 width. */
+#define CK_WM_13 HYPR(KC_K) /* Left, 2/3 width. */
+#define CK_WM_23 HYPR(KC_L) /* Bottom left, 2/3 width. */
+
+#define CK_WM_04 HYPR(KC_M) /* Center, 1/3 width. */
+#define CK_WM_14 HYPR(KC_N) /* Center, 1/3 width. */
+#define CK_WM_24 HYPR(KC_O) /* Center, 1/3 width. */
+
+#define CK_WM_05 HYPR(KC_P) /* Top right, 2/3 width. */
+#define CK_WM_15 HYPR(KC_Q) /* Right, 2/3 width. */
+#define CK_WM_25 HYPR(KC_R) /* Bottom right, 2/3 width. */
+
+#define CK_WM_06 HYPR(KC_S) /* Top right, 1/2 width. */
+#define CK_WM_16 HYPR(KC_T) /* Right, 1/2 width. */
+#define CK_WM_26 HYPR(KC_U) /* Bottom right, 1/2 width. */
+
+#define CK_WM_07 HYPR(KC_V) /* Top right, 1/3 width. */
+#define CK_WM_17 HYPR(KC_W) /* Right, 1/3 width. */
+#define CK_WM_27 HYPR(KC_X) /* Bottom right, 1/3 width. */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_planck_grid(
-        //     NOTHING      CHROME        SLACK        VSCODE      ITERM2                FIGMA         ZOOM        FINDER        1PASSWORD.      NOTHING         SLEEP
-        SS_00, HYPR(KC_1),  HYPR(KC_2),   HYPR(KC_3),  HYPR(KC_4), HYPR(KC_5),   /*/*/   HYPR(KC_6),   HYPR(KC_7), HYPR(KC_8),   HYPR(KC_9),     HYPR(KC_0),     CK_SLEEP_DIS,
-        //     NOTHING      ALL           1/2L         1/3L        2/3R                  1/3C          2/3L        1/3R          1/2R            NOTHING         LOCK
-        SS_01, HYPR(KC_A),  CK_DKTP,      HYPR(KC_C),  HYPR(KC_D), HYPR(KC_E),   /*/*/   HYPR(KC_F),   HYPR(KC_G), HYPR(KC_H),   HYPR(KC_I),     HYPR(KC_J),     CK_LOCK,
-        //     NOTHING      CENTER        T1/2L        T1/3L       T2/3R                 T1/3C         T2/3L       T1/3R         T1/2R           NOTHING         SCREENSHOT
-        SS_02, HYPR(KC_K),  HYPR(KC_L),   HYPR(KC_M),  HYPR(KC_N), HYPR(KC_O),   /*/*/   HYPR(KC_P),   MEH(KC_A),  HYPR(KC_R),   HYPR(KC_S),     HYPR(KC_T),     CK_SCHT,
-        //     NOTHING      FULL          B1/2L        B1/3L       B2/3R                 B1/3C         B2/3L       B1/3R         B1/2R           NOTHING         SPEAK
-        SS_03, HYPR(KC_U),  HYPR(KC_V),   HYPR(KC_W),  HYPR(KC_X), HYPR(KC_Y),   /*/*/   HYPR(KC_Z),   MEH(KC_O),  MEH(KC_E),    MEH(KC_I),      MEH(KC_SCLN),   CK_SPCH
+        CK_THINKING_SHEEP,   CK_FLOCK_1,    CK_ZOOM_MUTE,   CK_ZOOM_VIDEO,  CK_ZOOM_INVITE, CK_ZOOM_SHARE,  CK_ZOOM_CHAT,   CK_SYS_EMOJI,  CK_LOREM,      CK_DASH,       KC_NO,         CK_SYS_SLEEP_DIS,
+        CK_SHEEP_MINI_CLEAR, CK_FLOCK_2,    CK_WM_00,       CK_WM_01,       CK_WM_02,       CK_WM_03,       CK_WM_04,       CK_WM_05,      CK_WM_06,      CK_WM_07,      KC_NO,         CK_SYS_LOCK,
+        CK_SHEEP_CLEAR,      CK_FLOCK_3,    CK_WM_10,       CK_WM_11,       CK_WM_12,       CK_WM_13,       CK_WM_14,       CK_WM_15,      CK_WM_16,      CK_WM_17,      KC_NO,         CK_SYS_SPEECH,
+        KC_NO,               CK_FLOCK_4,    CK_WM_20,       CK_WM_21,       CK_WM_22,       CK_WM_23,       CK_WM_24,       CK_WM_25,      CK_WM_26,      CK_WM_27,      KC_NO,         CK_SYS_SCREENSHOT
     ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (keycode >= SS_00 && keycode <= SS_03 && record->event.pressed) {
-        SEND_STRING(STRINGS[keycode - SS_00]);
-        tap_code(KC_ENTER);
+    switch (keycode) {
+    case CK_SYS_EMOJI:
+        if (record->event.pressed) {
+            SEND_STRING(SS_DOWN(X_LGUI) SS_DOWN(X_LCTL) SS_TAP(X_SPACE) SS_UP(X_LGUI) SS_UP(X_LCTL));
+        }
+        break;
+    case CK_SYS_SCREENSHOT:
+        if (record->event.pressed) {
+            SEND_STRING(SS_DOWN(X_LGUI) SS_DOWN(X_LSFT) SS_TAP(X_4) SS_UP(X_LSFT) SS_UP(X_LGUI) SS_DELAY(100) SS_TAP(X_SPACE) SS_DELAY(100) SS_TAP(X_MS_BTN1));
+        }
+        break;
+    case CK_THINKING_SHEEP:
+        if (record->event.pressed) {
+            SEND_STRING(":thinking-Sheep:");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_FLOCK_1:
+        if (record->event.pressed) {
+            SEND_STRING("Andrew's Flock");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_FLOCK_2:
+        if (record->event.pressed) {
+            SEND_STRING("Andrew's Flock 2");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_FLOCK_3:
+        if (record->event.pressed) {
+            SEND_STRING("Andrew's Flock 3");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_FLOCK_4:
+        if (record->event.pressed) {
+            SEND_STRING("Andrew's Flock 4");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_SHEEP_MINI_CLEAR:
+        if (record->event.pressed) {
+            SEND_STRING("!minisheepclear");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_SHEEP_CLEAR:
+        if (record->event.pressed) {
+            SEND_STRING("!sheepclear");
+            tap_code(KC_ENTER);
+        }
+        break;
+    case CK_LOREM:
+        if (record->event.pressed) {
+            SEND_STRING("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        }
+        break;
     }
+
     return true;
 };
