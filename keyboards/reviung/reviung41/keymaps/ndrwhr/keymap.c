@@ -25,8 +25,8 @@ enum layer_names {
 
 #define LY_P  MO(_PINKY)
 #define LY_L  MO(_LEFT)
-#define LY_R MO(_RIGHT)
-#define LY_S MO(_SPECIAL)
+#define LY_R  MO(_RIGHT)
+#define LY_S  MO(_SPECIAL)
 
 enum custom_keycodes {
     CK_EMJI = SAFE_RANGE,   // {KC_LGUI,KC_LCTL,KC_SPC}
@@ -69,31 +69,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SPECIAL] = LAYOUT_reviung41(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DM_PLY1,                       DM_PLY2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                        XXXXXXX, DM_REC1,       DM_RSTP,        DM_REC2, XXXXXXX
+    DM_REC1, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DM_PLY1,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    DM_REC2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DM_PLY2,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    DM_RSTP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                        XXXXXXX, XXXXXXX,       XXXXXXX,        XXXXXXX, XXXXXXX
   ),
 };
+
+// Helper function to set RGB color with locked brightness
+void set_rgb_locked_brightness(uint8_t hue, uint8_t sat) {
+    rgblight_sethsv_noeeprom(hue, sat, LOCKED_RGB_BRIGHTNESS);
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     layer_state_t new_state = update_tri_layer_state(state, _LEFT, _RIGHT, _SPECIAL);
 
     switch (get_highest_layer(new_state)) {
     case _PINKY:
-        rgblight_setrgb(RGB_PINK);
+        set_rgb_locked_brightness(234, 128);  // HSV_PINK with locked brightness
         break;
     case _LEFT:
-        rgblight_setrgb (RGB_BLUE);
+        set_rgb_locked_brightness(170, 255);  // HSV_BLUE with locked brightness
         break;
     case _RIGHT:
-        rgblight_setrgb (RGB_RED);
+        set_rgb_locked_brightness(0, 255);    // HSV_RED with locked brightness
         break;
     case _SPECIAL:
-        rgblight_setrgb (RGB_GOLDENROD);
+        set_rgb_locked_brightness(30, 218);   // HSV_GOLDENROD with locked brightness
         break;
     default: //  for any other layers, or the default layer
-        rgblight_setrgb (RGB_WHITE);
+        set_rgb_locked_brightness(0, 0);      // HSV_WHITE with locked brightness
         break;
     }
 
@@ -101,6 +106,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Block RGB brightness change keycodes to enforce locked brightness
+    switch (keycode) {
+        case QK_UNDERGLOW_VALUE_UP:
+        case QK_UNDERGLOW_VALUE_DOWN:
+            return false;  // Consume these keycodes
+    }
+
     switch (keycode) {
     case CK_EMJI:
         if (record->event.pressed) {
@@ -171,7 +183,7 @@ void check_rgb_timeout() {
 
 void keyboard_post_init_user(void) {
   rgblight_enable_noeeprom(); // Enables RGB, without saving settings
-  rgblight_sethsv_noeeprom(HSV_WHITE);
+  set_rgb_locked_brightness(0, 0);  // White color (H=0, S=0) with locked brightness
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 }
 
