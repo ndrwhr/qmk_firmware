@@ -29,8 +29,7 @@ enum layer_names {
 #define LY_S  MO(_SPECIAL)
 
 enum custom_keycodes {
-    CK_EMJI = SAFE_RANGE,   // {KC_LGUI,KC_LCTL,KC_SPC}
-    CK_TIME,                // /time -
+    CK_TIME = SAFE_RANGE,   // /time -
     CK_SPKE,                // - [+] {KC_ESC}
     CK_TRGH,                // - [-] {KC_ESC}
     CK_CC,                  // 4242424242424242
@@ -38,6 +37,8 @@ enum custom_keycodes {
     CK_DOT,                 // ..\n
     CK_LOR,                 // Lorem Ipsum
 };
+
+#define CK_EMJI G(C(KC_SPC))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_reviung41(
@@ -114,11 +115,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
-    case CK_EMJI:
-        if (record->event.pressed) {
-            SEND_STRING(SS_DOWN(X_LGUI) SS_DOWN(X_LCTL) SS_TAP(X_SPACE) SS_UP(X_LGUI) SS_UP(X_LCTL));
-        }
-        break;
     case CK_TIME:
         if (record->event.pressed){
             SEND_STRING("/time -");
